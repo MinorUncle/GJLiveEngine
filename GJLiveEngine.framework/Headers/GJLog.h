@@ -106,7 +106,7 @@ typedef GVoid(GJ_LogCallback)(GJClass *logClass, GJ_LogLevel level, const char *
 GVoid GJ_LogSetLevel(GJ_LogLevel lvl);
 
 GVoid GJ_LogSetCallback(GJ_LogCallback *cb);
-GVoid GJ_LogSetOutput(char *file);
+GVoid GJ_LogSetOutput(const char *file);
 
 GVoid GJ_Log(const GVoid *logClass, GJ_LogLevel level, const char *pre, const char *format, ...) __printflike(4, 5);
 GVoid GJ_LogHex(GJ_LogLevel level, const GUInt8 *data, GUInt32 len);
@@ -122,11 +122,12 @@ GJ_LogLevel GJ_LogGetLevel(GVoid);
 #define GJCheckResult(isTrue, format, ...) GJ_LogCheckResult(isTrue, __func__, format, ##__VA_ARGS__)
 #define GJCheckBool(isTrue, format, ...) GJ_LogCheckBool(isTrue, __func__, format, ##__VA_ARGS__)
 
-#define GJAssert(isTrue, format, ...) GJ_LogAssert(isTrue, __func__, format, ##__VA_ARGS__)
 
 #ifdef GJ_DEBUG
 
 #define GJLOG(dclass, level, format, ...) GJ_Log((dclass), (level), __func__, format, ##__VA_ARGS__)
+
+#define GJAssert(isTrue, format, ...) GJ_LogAssert(isTrue, __func__, format, ##__VA_ARGS__)
 
 #ifdef GJ_DEBUG_FREQUENTLY
 
@@ -140,6 +141,7 @@ GJ_LogLevel GJ_LogGetLevel(GVoid);
 #define GJLOG(dclass, level, format, ...)
 #define GJOLOG(switch, level, format, ...)
 #define GJLOGFREQ(level, format, ...)
+#define GJAssert(isTrue, format, ...)
 #endif
     
     
