@@ -19,7 +19,7 @@
 - (void)livePull:(GJLivePull *)livePull updatePullStatus:(GJPullSessionStatus *)status;
 - (void)livePull:(GJLivePull *)livePull firstFrameDecode:(GJPullFirstFrameInfo *)info;
 - (void)livePull:(GJLivePull *)livePull firstFrameRender:(GJPullFirstFrameInfo *)info;
-- (void)livePull:(GJLivePull *)livePull closeConnent:(GJPullSessionInfo *)info resion:(GJConnentCloceReason)reason;
+- (void)livePull:(GJLivePull *)livePull closeConnent:(GJPullSessionInfo *)info;
 - (void)livePull:(GJLivePull *)livePull connentSuccessWithElapsed:(int)elapsed;
 - (void)livePull:(GJLivePull *)livePull bufferUpdatePercent:(float)percent duration:(long)duration;
 #ifdef NETWORK_DELAY
@@ -27,8 +27,7 @@
 - (void)livePull:(GJLivePull *)livePull testNetShake:(long)shake;
 - (void)livePull:(GJLivePull *)livePull testKeyDelay:(long)delay;
 #endif
-- (void)livePull:(GJLivePull *)livePull netShakeUpdate:(long)shake;
-- (void)livePull:(GJLivePull *)livePull netShakeRangeUpdate:(long)range;
+- (void)livePull:(GJLivePull *)livePull netShakeUpdate:(GJShakeUpdateInfo*)shake;
 
 - (void)livePull:(GJLivePull *)livePull dewaterUpdate:(BOOL)isDewatering;
 

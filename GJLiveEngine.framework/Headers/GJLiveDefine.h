@@ -52,6 +52,17 @@ typedef struct GRational {
 
 typedef GHandle GView;
 
+typedef enum _ProfileLevel{
+    profileLevelBase,
+    profileLevelMain,
+    profileLevelHigh,
+}GProfileLevel;
+
+typedef enum _EntropyMode{
+    kEntropyMode_CABAC,
+    kEntropyMode_CAVLC,
+}GEntropyMode;
+
 typedef enum _GJCaptureType {
     kGJCaptureTypeCamera,
     kGJCaptureTypeView,
@@ -175,6 +186,14 @@ typedef struct _PullSessionInfo {
     GLong buffingCount;
 } GJPullSessionInfo;
 
+typedef struct _GJShakeUpdateInfo {
+    GLong   netShakeRange;
+    GLong   shake;
+    GLong   lowWater;
+    GLong   controlWater;
+    GLong   highWater;
+} GJShakeUpdateInfo;
+
 typedef struct _PullFirstFrameInfo {
     GLong delay;//in ms;
     GSize size;
@@ -230,6 +249,8 @@ typedef struct _GJPushConfig {
     GInt32              mAudioChannel;
     GInt32              mAudioBitrate;
 }GJPushConfig;
+
+#define VIDEO_TIMESCALE 1000
 
 extern GVoid cleanMemory(GBool async);
 #endif /* GJLiveDefine_h */

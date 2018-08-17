@@ -32,6 +32,30 @@ typedef void (^GJLiveARUpdateBlock)(void);
 - (BOOL)resume;
 @end
 
+//GUInt32 mFps;
+//GSize   mPushSize;
+//GInt32  mVideoBitrate; //  bit/s
+//
+//GInt32              mAudioSampleRate;
+//GInt32              mAudioChannel;
+//GInt32              mAudioBitrate;
+
+@interface GJPushConfigProtocol : NSObject
+//required
+@property(assign,nonatomic)NSInteger fps;
+@property(assign,nonatomic)CGSize    pushSize;
+@property(assign,nonatomic)NSInteger videoBitrate;
+@property(assign,nonatomic)NSInteger audioSampleRate;
+@property(assign,nonatomic)NSInteger audioChannel;
+@property(assign,nonatomic)NSInteger audioBitrate;
+
+//optional
+@property(assign,nonatomic)GRational     maxVideoDrop;
+@property(assign,nonatomic)NSInteger     lowQualityVideoBitrate;
+@property(assign,nonatomic)GProfileLevel videoProfileLevel;
+@property(assign,nonatomic)GEntropyMode  videoEntropyMode;
+@end
+
 @protocol GJLivePushDelegate <NSObject>
 @required
 
