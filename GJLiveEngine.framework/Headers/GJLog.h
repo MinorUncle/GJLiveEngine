@@ -55,48 +55,24 @@ typedef struct _GJClass {
     GJ_LogLevel dLevel;
 } GJClass;
 
-static const GJClass Default_NONE = {
-    .className = GNULL,
-    .dLevel    = GJ_LOGNONE,
-};
+extern const GJClass logTrancking;
+extern const GJClass Default_NONE;
+extern const GJClass Default_FORBID;
+extern const GJClass Default_ERROR;
+extern const GJClass Default_WARNING;
+extern const GJClass Default_DEBUG;
+extern const GJClass Default_INFO;
+extern const GJClass Default_ALL;
+
 #define LOG_NONE (&Default_NONE)
-
-static const GJClass Default_FORBID = {
-    .className = GNULL,
-    .dLevel    = GJ_LOGFORBID,
-};
-
 #define LOG_FORBID (&Default_FORBID)
-
-static const GJClass Default_ERROR = {
-    .className = GNULL,
-    .dLevel    = GJ_LOGERROR,
-};
 #define LOG_ERROR (&Default_ERROR)
-
-static const GJClass Default_WARNING = {
-    .className = GNULL,
-    .dLevel    = GJ_LOGWARNING,
-};
 #define LOG_WARNING (&Default_WARNING)
-
-static const GJClass Default_DEBUG = {
-    .className = GNULL,
-    .dLevel    = GJ_LOGDEBUG,
-};
 #define LOG_DEBUG (&Default_DEBUG)
-
-static const GJClass Default_INFO = {
-    .className = GNULL,
-    .dLevel    = GJ_LOGINFO,
-};
 #define LOG_INFO (&Default_INFO)
-
-static const GJClass Default_ALL = {
-    .className = GNULL,
-    .dLevel    = GJ_LOGALL,
-};
 #define LOG_ALL (&Default_ALL)
+#define LOG_TRACKING (&logTrancking)
+
 
 extern GJClass *defaultDebug;
 
@@ -124,6 +100,8 @@ GJ_LogLevel GJ_LogGetLevel(GVoid);
 
 
 #ifdef GJ_DEBUG
+    
+#define GJLOGTRACKING(format,...) GJ_Log(LOG_TRACKING,GJ_LOGDEBUG, __func__, format, ##__VA_ARGS__)
 
 #define GJLOG(dclass, level, format, ...) GJ_Log((dclass), (level), __func__, format, ##__VA_ARGS__)
 
@@ -138,6 +116,8 @@ GJ_LogLevel GJ_LogGetLevel(GVoid);
 #endif
 
 #else
+    
+#define GJLOGTRACKING(...)
 #define GJLOG(dclass, level, format, ...)
 #define GJOLOG(switch, level, format, ...)
 #define GJLOGFREQ(level, format, ...)
