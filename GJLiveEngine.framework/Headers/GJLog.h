@@ -103,7 +103,9 @@ GJ_LogLevel GJ_LogGetLevel(GVoid);
     
 #define GJLOGTRACKING(format,...) GJ_Log(LOG_TRACKING,GJ_LOGDEBUG, __func__, format, ##__VA_ARGS__)
 
-#define GJLOG(dclass, level, format, ...) GJ_Log((dclass), (level), __func__, format, ##__VA_ARGS__)
+#define GJCLOG(dclass, level, format, ...) GJ_Log((dclass), (level), __func__, format, ##__VA_ARGS__)
+    
+#define GJLOG(level, format, ...) GJ_Log(GNULL, (level), __func__, format, ##__VA_ARGS__)
 
 #define GJAssert(isTrue, format, ...) GJ_LogAssert(isTrue, __func__, format, ##__VA_ARGS__)
 
@@ -118,7 +120,8 @@ GJ_LogLevel GJ_LogGetLevel(GVoid);
 #else
     
 #define GJLOGTRACKING(...)
-#define GJLOG(dclass, level, format, ...)
+#define GJCLOG(dclass, level, format, ...)
+#define GJLOG(level, format, ...)
 #define GJOLOG(switch, level, format, ...)
 #define GJLOGFREQ(level, format, ...)
 #define GJAssert(isTrue, format, ...)
