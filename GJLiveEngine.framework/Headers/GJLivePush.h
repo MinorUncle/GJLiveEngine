@@ -61,8 +61,8 @@ typedef void (^GJLiveARUpdateBlock)(void);
 
 - (void)livePush:(GJLivePush *_Nonnull)livePush mixFileFinish:(NSString *_Nonnull)path;
 - (void)livePush:(GJLivePush *_Nonnull)livePush updatePushStatus:(GJPushSessionStatus *_Nonnull)status;
-- (void)livePush:(GJLivePush *_Nonnull)livePush closeConnent:(GJPushSessionInfo *_Nonnull)info resion:(GJConnentCloceReason)reason;
-- (void)livePush:(GJLivePush *_Nonnull)livePush connentSuccessWithElapsed:(GLong)elapsed;
+- (void)livePush:(GJLivePush *_Nonnull)livePush closeConnect:(GJPushSessionInfo *_Nonnull)info resion:(GJConnectCloceReason)reason;
+- (void)livePush:(GJLivePush *_Nonnull)livePush connectSuccessWithElapsed:(GLong)elapsed;
 - (void)livePush:(GJLivePush *_Nonnull)livePush dynamicVideoUpdate:(VideoDynamicInfo *_Nonnull)elapsed;
 - (void)livePush:(GJLivePush *_Nonnull)livePush recodeFinish:(NSError *_Nullable)error;
 - (void)livePush:(GJLivePush *_Nonnull)livePush errorType:(GJLiveErrorType)type infoDesc:(NSString *_Nonnull)info;

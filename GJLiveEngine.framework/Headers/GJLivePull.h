@@ -19,8 +19,8 @@
 - (void)livePull:(GJLivePull *)livePull updatePullStatus:(GJPullSessionStatus *)status;
 - (void)livePull:(GJLivePull *)livePull firstFrameDecode:(GJPullFirstFrameInfo *)info;
 - (void)livePull:(GJLivePull *)livePull firstFrameRender:(GJPullFirstFrameInfo *)info;
-- (void)livePull:(GJLivePull *)livePull closeConnent:(GJPullSessionInfo *)info;
-- (void)livePull:(GJLivePull *)livePull connentSuccessWithElapsed:(int)elapsed;
+- (void)livePull:(GJLivePull *)livePull closeConnect:(GJPullSessionInfo *)info;
+- (void)livePull:(GJLivePull *)livePull connectSuccessWithElapsed:(int)elapsed;
 - (void)livePull:(GJLivePull *)livePull bufferUpdatePercent:(float)percent duration:(long)duration;
 #ifdef NETWORK_DELAY
 - (void)livePull:(GJLivePull *)livePull networkDelay:(long)delay;

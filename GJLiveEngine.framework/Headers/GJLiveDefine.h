@@ -174,10 +174,10 @@ typedef struct _VideoDynamicInfo {
     GFloat sourceBitrate;
     GFloat sourceFPS;
 } VideoDynamicInfo;
-typedef enum _ConnentCloceReason {
-    kConnentCloce_Active, //主动关闭
-    kConnentCloce_Drop,   //掉线
-} GJConnentCloceReason;
+typedef enum _ConnectCloceReason {
+    kConnectCloce_Active, //主动关闭
+    kConnectCloce_Drop,   //掉线
+} GJConnectCloceReason;
 typedef struct _PullSessionInfo {
     GLong pullFrameCount;
     GLong dropFrameCount;
