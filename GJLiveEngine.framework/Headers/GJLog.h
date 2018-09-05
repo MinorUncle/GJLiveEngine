@@ -50,19 +50,19 @@ typedef enum {
     GJ_LOGALL
 } GJ_LogLevel;
 
-typedef struct _GJClass {
+typedef struct _ {
     GChar *     className;
     GJ_LogLevel dLevel;
-} GJClass;
+} GJLogClass;
 
-extern const GJClass logTrancking;
-extern const GJClass Default_NONE;
-extern const GJClass Default_FORBID;
-extern const GJClass Default_ERROR;
-extern const GJClass Default_WARNING;
-extern const GJClass Default_DEBUG;
-extern const GJClass Default_INFO;
-extern const GJClass Default_ALL;
+extern const GJLogClass logTrancking;
+extern const GJLogClass Default_NONE;
+extern const GJLogClass Default_FORBID;
+extern const GJLogClass Default_ERROR;
+extern const GJLogClass Default_WARNING;
+extern const GJLogClass Default_DEBUG;
+extern const GJLogClass Default_INFO;
+extern const GJLogClass Default_ALL;
 
 #define LOG_NONE (&Default_NONE)
 #define LOG_FORBID (&Default_FORBID)
@@ -74,9 +74,9 @@ extern const GJClass Default_ALL;
 #define LOG_TRACKING (&logTrancking)
 
 
-extern GJClass *defaultDebug;
+extern GJLogClass *defaultDebug;
 
-typedef GVoid(GJ_LogCallback)(GJClass *logClass, GJ_LogLevel level, const char *pre, const char *fmt, va_list);
+typedef GVoid(GJ_LogCallback)(GJLogClass *logClass, GJ_LogLevel level, const char *pre, const char *fmt, va_list);
 
 //小于GJ_debuglevel则显示
 GVoid GJ_LogSetLevel(GJ_LogLevel lvl);
