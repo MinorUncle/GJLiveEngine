@@ -138,6 +138,7 @@ typedef struct PushInfo {
     GFloat frameRate; //
     GLong    cacheTime; //in ms
     GLong    cacheCount;
+    GLong    dropCount;
 } GJPushInfo;
 typedef struct PullInfo {
     GFloat bitrate;   //byte/s

@@ -78,6 +78,7 @@ extern GJLogClass *defaultDebug;
 
 typedef GVoid(GJ_LogCallback)(GJLogClass *logClass, GJ_LogLevel level, const char *pre, const char *fmt, va_list);
 
+GVoid GJ_LogClean(void);
 //小于GJ_debuglevel则显示
 GVoid GJ_LogSetLevel(GJ_LogLevel lvl);
 
