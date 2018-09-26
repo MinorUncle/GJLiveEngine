@@ -133,8 +133,8 @@ typedef enum _GJNetworkQuality {
     GJNetworkQualityTerrible,
 } GJNetworkQuality;
 typedef struct PushInfo {
-    GFloat encodeBitrate;   //bit/s
-    GFloat pushBitrate;     //bit/s
+    GFloat encodeBitrate;   //byte/s
+    GFloat pushBitrate;     //byte/s
     GFloat frameRate; //
     GLong    cacheTime; //in ms
     GLong    cacheCount;
@@ -174,6 +174,7 @@ typedef struct _VideoDynamicInfo {
     GFloat currentFPS;
     GFloat sourceBitrate;
     GFloat sourceFPS;
+    GInt32 sensitivity;
 } VideoDynamicInfo;
 typedef enum _ConnectCloceReason {
     kConnectCloce_Active, //主动关闭
