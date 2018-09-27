@@ -133,8 +133,8 @@ typedef enum _GJNetworkQuality {
     GJNetworkQualityTerrible,
 } GJNetworkQuality;
 typedef struct PushInfo {
-    GFloat encodeBitrate;   //byte/s
-    GFloat pushBitrate;     //byte/s
+    GFloat encodeBitrate;   //bit/s
+    GFloat pushBitrate;     //bit/s
     GFloat frameRate; //
     GLong    cacheTime; //in ms
     GLong    cacheCount;
