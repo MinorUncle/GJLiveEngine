@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <dispatch/once.h>
 #include "GJPlatformHeader.h"
 #ifdef __cplusplus
 extern "C" {
@@ -73,50 +74,78 @@ extern const GJLogClass Default_ALL;
 #define LOG_ALL (&Default_ALL)
 #define LOG_TRACKING (&logTrancking)
 
+typedef struct _GJLog GJLog;
 
-extern GJLogClass *defaultDebug;
+extern GJLog* defalutLoger;
+typedef GVoid(*GJ_LogCallback)(GJLog* loger, const GJLogClass *logClass, GJ_LogLevel level, const char *pre, const char *fmt, va_list);
 
-typedef GVoid(GJ_LogCallback)(GJLogClass *logClass, GJ_LogLevel level, const char *pre, const char *fmt, va_list);
+GVoid gj_async_time_func_log(GJLog* loger, const GJLogClass *dClass, GJ_LogLevel level, const char *pre, const char *format, va_list vl);
+GVoid gj_sync_time_func_log(GJLog* loger, const GJLogClass *dClass, GJ_LogLevel level, const char *pre, const char *format, va_list vl);
+GVoid gj_async_log(GJLog* loger, const GJLogClass *dClass, GJ_LogLevel level, const char *pre, const char *format, va_list vl);
 
-GVoid GJ_LogClean(void);
-//小于GJ_debuglevel则显示
-GVoid GJ_LogSetLevel(GJ_LogLevel lvl);
+GVoid GJLog_Create(GJLog** pLoger,GJ_LogCallback logCallback);
+GVoid GJLog_SetLogFile(GJLog* loger,const GChar* file);
+GVoid GJLog_Log(GJLog* loger,const GJLogClass *logClass, GJ_LogLevel level, const char *pre, const char *format, ...) __printflike(5, 6);
+GVoid GJLog_SetLogLevel(GJLog* loger,GJ_LogLevel level);
+GVoid GJLog_LogClean(GJLog* loger,GBool complete);
+GVoid GJLog_LogHex(GJLog* loger, GJ_LogLevel level, const GUInt8 *data, GUInt32 len);
+GVoid GJLog_LogHexString(GJLog* loger, GJ_LogLevel level, const GUInt8 *data, GUInt32 len);
+GVoid GJLog_Flush(GJLog* loger);
 
-GVoid GJ_LogSetCallback(GJ_LogCallback *cb);
-GVoid GJ_LogSetOutput(const char *file);
+GVoid GJLog_Dealloc(GJLog** pLoger);
+    
+static inline GJLog* getDefaultLog(){
+    if (defalutLoger == GNULL) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            GJLog_Create(&defalutLoger,gj_async_time_func_log);
+        });
+    }
+    return defalutLoger;
+}
+    
+static inline GVoid GJ_LogClean(void){
+        GJLog_LogClean(getDefaultLog(),GTrue);
+}
 
-GVoid GJ_Log(const GVoid *logClass, GJ_LogLevel level, const char *pre, const char *format, ...) __printflike(4, 5);
-GVoid GJ_LogHex(GJ_LogLevel level, const GUInt8 *data, GUInt32 len);
-GVoid GJ_LogHexString(GJ_LogLevel level, const GUInt8 *data, GUInt32 len);
+static inline GVoid GJ_LogSetLevel(GJ_LogLevel lvl){
+    GJLog_SetLogLevel(getDefaultLog(), lvl);
+}
+
+static inline GVoid GJ_LogSetOutput(const char *file){
+    GJLog_SetLogFile(getDefaultLog(), file);
+}
+
+
 
 //所有等级都会打印，但是大于GJ_LOGDEBUG模式会产生中断
-GVoid GJ_LogAssert(GInt32 isTrue,const char *pre,const char *format, ...) __attribute__((format(printf, 3, 4)));
-GBool GJ_LogCheckResult(GResult result, const char *pre, const char *format, ...);
-GBool GJ_LogCheckBool(GBool result, const char *pre, const char *format, ...);
+//GVoid GJ_LogAssert(GInt32 isTrue,const char *pre,const char *format, ...) __attribute__((format(printf, 3, 4)));
+//GBool GJ_LogCheckResult(GResult result, const char *pre, const char *format, ...);
+//GBool GJ_LogCheckBool(GBool result, const char *pre, const char *format, ...);
 
-GJ_LogLevel GJ_LogGetLevel(GVoid);
+//GJ_LogLevel GJ_LogGetLevel(GVoid);
 
-#define GJCheckResult(isTrue, format, ...) GJ_LogCheckResult(isTrue, __func__, format, ##__VA_ARGS__)
-#define GJCheckBool(isTrue, format, ...) GJ_LogCheckBool(isTrue, __func__, format, ##__VA_ARGS__)
+//#define GJCheckResult(isTrue, format, ...) GJ_LogCheckResult(isTrue, __func__, format, ##__VA_ARGS__)
+//#define GJCheckBool(isTrue, format, ...) GJ_LogCheckBool(isTrue, __func__, format, ##__VA_ARGS__)
 
 
 #ifdef GJ_DEBUG
     
-#define GJLOGTRACKING(format,...) GJ_Log(LOG_TRACKING,GJ_LOGDEBUG, __func__, format, ##__VA_ARGS__)
-
-#define GJCLOG(dclass, level, format, ...) GJ_Log((dclass), (level), __func__, format, ##__VA_ARGS__)
+#define GJCustomLOG(loger,level, format, ...) GJLog_Log(loger,GNULL, (level), __func__, format, ##__VA_ARGS__)
     
-#define GJLOG(level, format, ...) GJ_Log(GNULL, (level), __func__, format, ##__VA_ARGS__)
+#define GJLOGTRACKING(format,...) GJLog_Log(getDefaultLog(),LOG_TRACKING,GJ_LOGDEBUG, __func__, format, ##__VA_ARGS__)
 
-#define GJAssert(isTrue, format, ...) GJ_LogAssert(isTrue, __func__, format, ##__VA_ARGS__)
+#define GJCLOG(dclass, level, format, ...) GJLog_Log(getDefaultLog(),(dclass), (level), __func__, format, ##__VA_ARGS__)
+    
+#define GJLOG(level, format, ...) GJLog_Log(getDefaultLog(),GNULL, (level), __func__, format, ##__VA_ARGS__)
 
-#ifdef GJ_DEBUG_FREQUENTLY
+#define GJAssert(isTrue, format, ...) !(isTrue)?GJLog_Log(getDefaultLog(),GNULL,(GJ_LOGFORBID),__func__, format, ##__VA_ARGS__):GNULL
 
-#define GJLOGFREQ(format, ...) GJ_Log(DEFAULT_LOG, GJ_LOGALL, __func__, format, ##__VA_ARGS__)
-#else
+#define GJ_LogHexString(level,data,len) GJLog_LogHexString(getDefaultLog(),level,data,len)
 
-#define GJLOGFREQ(level, format, ...)
-#endif
+#define GJ_LogHex(level,data,len) GJLog_LogHex(getDefaultLog(),level,data,len)
+
+#define GJ_LogFlush() GJLog_LogFlush(getDefaultLog())
 
 #else
     
@@ -126,6 +155,8 @@ GJ_LogLevel GJ_LogGetLevel(GVoid);
 #define GJOLOG(switch, level, format, ...)
 #define GJLOGFREQ(level, format, ...)
 #define GJAssert(isTrue, format, ...)
+#define GJ_LogHexString(level,data,len)
+#define GJLog_LogHex(level,data,len)
 #endif
     
     

@@ -244,6 +244,7 @@ typedef struct _GJVideoStreamFormat {
 } GJVideoStreamFormat;
 typedef struct _GJPushConfig {
     GUInt32 mFps;
+    GUInt32 mMinFps;
     GSize   mPushSize;
     GInt32  mVideoBitrate; //  bit/s
 
