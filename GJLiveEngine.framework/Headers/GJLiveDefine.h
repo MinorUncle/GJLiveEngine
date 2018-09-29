@@ -154,11 +154,16 @@ typedef struct UnitBufferInfo {
     GLong    cacheCount;
 } UnitBufferInfo;
 
+typedef struct _GJNetPredictiveInfo {
+    GInt32 netpredictiveInfo ;
+    GInt32 unitNetpredictiveInfo ;
+}GJNetPredictiveInfo;
+
 typedef struct PushSessionStatus {
     GJPushInfo       videoStatus;
     GJPushInfo       audioStatus;
     GJNetworkQuality netWorkQuarity;
-
+    GJNetPredictiveInfo predictiveInfo;
 } GJPushSessionStatus;
 typedef struct PullSessionStatus {
     GJPullInfo videoStatus;
@@ -176,6 +181,7 @@ typedef struct _VideoDynamicInfo {
     GFloat sourceFPS;
     GInt32 sensitivity;
 } VideoDynamicInfo;
+
 typedef enum _ConnectCloceReason {
     kConnectCloce_Active, //主动关闭
     kConnectCloce_Drop,   //掉线
