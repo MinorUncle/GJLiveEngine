@@ -13,7 +13,9 @@
 #import <AVFoundation/AVFoundation.h>
 @class UIView;
 @class GJLivePush;
-
+@class GJSticker;
+@class GJAnimationSticker;
+@class GJRealTimeSticker;
 @class ARSCNView;
 typedef void (^GJLiveARUpdateBlock)(void);
 @protocol GJImageARScene <NSObject>
@@ -180,20 +182,9 @@ typedef void (^OverlaysUpdate)(NSInteger index, const GJOverlayAttribute *_Nulla
 
 - (UIImage *_Nullable)captureFreshDisplayImage;
 
-/**
- 贴图，如果存在则取消已存在的
+-(void)addSticker:(GJSticker*)sticker;
 
- @param images 需要贴的图片集合
- @param fps 贴图更新的帧率
- @param updateBlock 每次更新的回调，index表示当前更新的图片，ioFinish表示是否结束，输入输出值。
- @return 是否成功
- */
-- (BOOL)startStickerWithImages:(NSArray<GJOverlayAttribute *> *_Nonnull)images fps:(NSInteger)fps updateBlock:(OverlaysUpdate _Nullable)updateBlock;
-
-/**
- 主动停止贴图。也可以通过addStickerWithImages的updateBlock，赋值ioFinish true来停止，不过该方法只能在更新的时候使用，可能会有延迟，fps越小延迟越大。
- */
-- (void)chanceSticker;
+-(void)removeStickerWithKey:(NSString*)key;
 
 - (BOOL)startTrackingImageWithImages:(NSArray<UIImage*>*_Nonnull)images initFrame:(GCRect)frame;
 

@@ -18,11 +18,13 @@ extern char GJLiveEngineBuild[];
 //FOUNDATION_EXPORT const unsigned char GJLiveEngineVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <GJLiveEngine/PublicHeader.h>
-#import <GJLiveEngine/GJLiveDefine.h>
 #import <GJLiveEngine/GJLiveEngine.h>
 #import <GJLiveEngine/GJLivePush.h>
 #import <GJLiveEngine/GJLivePull.h>
 #import <GJLiveEngine/GJLog.h>
+#import <GJLiveEngine/GJSticker.h>
+#import <GJLiveEngine/GJAnimationSticker.h>
+#import <GJLiveEngine/GJRealTimeSticker.h>
 #import <GJLiveEngine/GJPlatformHeader.h>
 #import <GJLiveEngine/UncaughtExceptionHandler.h>
 
