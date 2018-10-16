@@ -147,16 +147,25 @@ static inline GVoid GJ_LogSetOutput(const char *file){
 
 #define GJ_LogFlush() GJLog_LogFlush(getDefaultLog())
 
+#define GJLOGD(format, ...)  GJLog_Log(getDefaultLog(),GNULL, GJ_LOGDEBUG, __func__, format, ##__VA_ARGS__)
+    
+#define GJLOGE(format, ...)  GJLog_Log(getDefaultLog(),GNULL, GJ_LOGERROR, __func__, format, ##__VA_ARGS__)
+
+#define GJLOGI(format, ...)  GJLog_Log(getDefaultLog(),GNULL, GJ_LOGINFO, __func__, format, ##__VA_ARGS__)
+
+#define GJLOGA(format, ...)  GJLog_Log(getDefaultLog(),GNULL, GJ_LOGALL, __func__, format, ##__VA_ARGS__)
 #else
     
 #define GJLOGTRACKING(...)
 #define GJCLOG(dclass, level, format, ...)
 #define GJLOG(level, format, ...)
-#define GJOLOG(switch, level, format, ...)
-#define GJLOGFREQ(level, format, ...)
 #define GJAssert(isTrue, format, ...)
 #define GJ_LogHexString(level,data,len)
 #define GJLog_LogHex(level,data,len)
+#define GJLOGD(format, ...)
+#define GJLOGE(format, ...)
+#define GJLOGI(format, ...)
+#define GJLOGA(format, ...)
 #endif
     
     
